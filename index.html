@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Explorador Rick and Morty</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Nunito:wght@400;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <header>
+    <h1>Explorador Rick and Morty</h1>
+    <p class="subtitulo">Busque personagens de todos os universos</p>
+  </header>
+
+  <main>
+    <!-- Formulário: o envio (submit) dispara uma nova requisição -->
+    <form id="form-busca">
+      <input type="text" id="campo-busca" placeholder="Ex.: rick, morty, summer...">
+
+      <!-- O select também dispara uma nova requisição quando muda -->
+      <select id="filtro-status" aria-label="Filtrar por status">
+        <option value="">Todos os status</option>
+        <option value="alive">Vivo</option>
+        <option value="dead">Morto</option>
+        <option value="unknown">Desconhecido</option>
+      </select>
+
+      <button type="submit">Buscar</button>
+    </form>
+
+    <!-- Mostra "Carregando..." ou mensagens de erro -->
+    <p id="mensagem" role="status"></p>
+
+    <!-- Os cards são inseridos aqui via DOM -->
+    <section id="resultado"></section>
+  </main>
+
+  <footer>
+    <p>Dados: <a href="https://rickandmortyapi.com" target="_blank" rel="noopener">Rick and Morty API</a></p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+
+</html>

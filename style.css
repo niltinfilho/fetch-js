@@ -1,0 +1,194 @@
+/* ===== Variáveis de cor e fonte ===== */
+:root {
+  --fundo: #0f1b1a;
+  --superficie: #182927;
+  --borda: #2a4542;
+  --verde: #97ce4c;
+  --azul: #44c5e8;
+  --texto: #e8f3f1;
+  --texto-suave: #9bb5b1;
+  --vermelho: #ff6b6b;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Nunito', sans-serif;
+  background: var(--fundo);
+  color: var(--texto);
+  line-height: 1.5;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ===== Cabeçalho ===== */
+header {
+  text-align: center;
+  padding: 2.5rem 1rem 1.5rem;
+  background: linear-gradient(180deg, #1c3a35 0%, var(--fundo) 100%);
+}
+
+h1 {
+  font-family: 'Bangers', cursive;
+  font-size: clamp(2.2rem, 6vw, 3.5rem);
+  letter-spacing: 2px;
+  color: var(--verde);
+  text-shadow: 3px 3px 0 #0a1413, 0 0 20px rgba(151, 206, 76, 0.35);
+}
+
+.subtitulo {
+  color: var(--texto-suave);
+  margin-top: 0.25rem;
+}
+
+main {
+  flex: 1;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 3rem;
+}
+
+/* ===== Formulário ===== */
+#form-busca {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+}
+
+input,
+select,
+button {
+  font-family: inherit;
+  font-size: 1rem;
+  padding: 0.7rem 1rem;
+  border-radius: 8px;
+  border: 2px solid var(--borda);
+  background: var(--superficie);
+  color: var(--texto);
+}
+
+input {
+  flex: 1 1 260px;
+  max-width: 420px;
+}
+
+input:focus,
+select:focus {
+  outline: none;
+  border-color: var(--azul);
+}
+
+button {
+  background: var(--verde);
+  border-color: var(--verde);
+  color: #14210a;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.15s, filter 0.15s;
+}
+
+button:hover {
+  filter: brightness(1.1);
+  transform: translateY(-2px);
+}
+
+/* ===== Mensagens (carregando / erro) ===== */
+#mensagem {
+  text-align: center;
+  margin: 1.5rem 0;
+  min-height: 1.5rem;
+  color: var(--azul);
+  font-weight: 600;
+}
+
+#mensagem.erro {
+  color: var(--vermelho);
+}
+
+/* ===== Grade de cards ===== */
+#resultado {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 1.25rem;
+}
+
+.card {
+  background: var(--superficie);
+  border: 2px solid var(--borda);
+  border-radius: 14px;
+  overflow: hidden;
+  transition: transform 0.2s, border-color 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  border-color: var(--verde);
+}
+
+.card img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+}
+
+.card-corpo {
+  padding: 1rem;
+}
+
+.card h2 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  color: var(--verde);
+}
+
+.card p {
+  font-size: 0.95rem;
+  color: var(--texto-suave);
+  margin-bottom: 0.25rem;
+}
+
+.card p strong {
+  color: var(--texto);
+}
+
+/* Etiqueta colorida de status */
+.status {
+  display: inline-block;
+  padding: 0.15rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  margin-bottom: 0.6rem;
+  color: #101010;
+}
+
+.status.alive { background: var(--verde); }
+.status.dead { background: var(--vermelho); }
+.status.unknown { background: #b0b0b0; }
+
+footer {
+  text-align: center;
+  padding: 1rem;
+  color: var(--texto-suave);
+  font-size: 0.85rem;
+  border-top: 1px solid var(--borda);
+}
+
+footer a {
+  color: var(--azul);
+}
+
+@media (max-width: 480px) {
+  #form-busca > * {
+    width: 100%;
+    max-width: none;
+  }
+}
