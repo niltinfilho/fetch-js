@@ -8,10 +8,6 @@ const filtroStatus = document.getElementById('filtro-status');
 const mensagem = document.getElementById('mensagem');
 const resultado = document.getElementById('resultado');
 
-// Tradução dos valores que a API devolve (em inglês) para exibir em português
-const traducaoStatus = { Alive: 'Vivo', Dead: 'Morto', unknown: 'Desconhecido' };
-const traducaoGenero = { Male: 'Masculino', Female: 'Feminino', Genderless: 'Sem gênero', unknown: 'Desconhecido' };
-
 /**
  * Faz a requisição à API.
  * - "async" permite usar "await" dentro da função.
@@ -51,14 +47,13 @@ function criarInfo(rotulo, valor) {
  * para um personagem e devolve o elemento pronto.
  */
 function criarCard(personagem) {
-  const card = document.createElement('article');
-  card.classList.add('card');
+  const card = document.createElement('article'); // Cria o elemento 'article'
+  card.classList.add('card'); // Adiciona a classe 'card' no article
 
   // Imagem do personagem
   const img = document.createElement('img');
   img.src = personagem.image;
   img.alt = 'Foto de ' + personagem.name;
-  img.loading = 'lazy';
 
   // Container do texto
   const corpo = document.createElement('div');
@@ -70,13 +65,13 @@ function criarCard(personagem) {
   // Etiqueta de status (a classe muda a cor: alive / dead / unknown)
   const status = document.createElement('span');
   status.classList.add('status', personagem.status.toLowerCase());
-  status.textContent = traducaoStatus[personagem.status] || personagem.status;
+  status.textContent = personagem.status;
 
   // Informações do personagem
   corpo.appendChild(titulo);
   corpo.appendChild(status);
   corpo.appendChild(criarInfo('Espécie', personagem.species));
-  corpo.appendChild(criarInfo('Gênero', traducaoGenero[personagem.gender] || personagem.gender));
+  corpo.appendChild(criarInfo('Gênero', personagem.gender));
   corpo.appendChild(criarInfo('Origem', personagem.origin.name));
   corpo.appendChild(criarInfo('Última localização', personagem.location.name));
 
@@ -106,13 +101,19 @@ async function pesquisar() {
   resultado.innerHTML = '';
 
   // Monta a query string com os filtros preenchidos
-  const params = new URLSearchParams();
+  let endpoint = "/character";
   const nome = campo.value.trim();
-  if (nome) params.set('name', nome);
-  if (filtroStatus.value) params.set('status', filtroStatus.value);
+
+  if (nome && filtroStatus.value) {
+    endpoint += "?name=" + nome + "&status=" + filtroStatus.value;
+  } else if (nome) {
+    endpoint += "?name=" + nome;
+  } else if (filtroStatus.value) {
+    endpoint += "?status=" + filtroStatus.value;
+  }
 
   try {
-    const dados = await buscarDados(`/character/?${params.toString()}`);
+    const dados = await buscarDados(endpoint);
     mensagem.textContent = `${dados.info.count} personagem(ns) encontrado(s). Mostrando ${dados.results.length}.`;
     mostrarResultado(dados.results);
   } catch (error) {
@@ -123,14 +124,16 @@ async function pesquisar() {
   }
 }
 
-// Interação 1: envio do formulário (botão Buscar ou tecla Enter)
+// Envio do formulário (botão Buscar ou tecla Enter)
 form.addEventListener('submit', (event) => {
   event.preventDefault(); // evita recarregar a página
   pesquisar();
 });
 
-// Interação 2: trocar o status no select dispara uma nova requisição
-filtroStatus.addEventListener('change', pesquisar);
+// Trocar o status no select dispara uma nova requisição
+filtroStatus.addEventListener('change', () => {
+  pesquisar();
+});
 
 // Carrega alguns personagens ao abrir a página
 pesquisar();
